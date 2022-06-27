@@ -688,6 +688,42 @@ class AddSizeIntNegDimModule(torch.nn.Module):
 def AddSizeIntNegDimModule_basic(module, tu: TestUtils):
     module.forward(torch.randn(3, 3))
 
+# ==============================================================================
+
+class NativeMultiHeadAttention_1(torch.nn.Module):
+
+    def __init__(self):
+        super().__init__()
+        torch.manual_seed(0)
+        self.embed = torch.nn.Embedding(num_embeddings=100,
+                                        embedding_dim=50,
+                                        padding_idx=4)
+
+    @export
+    @annotate_args([
+        None
+    ])
+    def forward(self):
+        return torch.ops.aten._native_multi_head_attention(
+            torch.randn(1, 1, 1),
+            torch.randn(1, 1, 1),
+            torch.randn(1, 1, 1),
+            1,
+            1,
+            torch.randn(3, 1),
+            torch.randn(1),
+            torch.randn(1, 1),
+            torch.randn(1, 1),
+            torch.randn(1, 1),
+            True,
+            True
+            )
+
+
+@register_test_case(module_factory=lambda: NativeMultiHeadAttention_1())
+def NativeMultiHeadAttention_1_basic(module, tu: TestUtils):
+    module.forward()
+
 
 # ==============================================================================
 

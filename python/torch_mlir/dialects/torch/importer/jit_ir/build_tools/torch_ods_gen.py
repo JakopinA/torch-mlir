@@ -462,6 +462,7 @@ def emit_ops(emitter_td: TextEmitter, registry: Registry):
     emit("aten::tensor.float : (float, int?, Device?, bool) -> (Tensor)")
     emit("aten::Int.Tensor : (Tensor) -> (int)", has_folder=True)
     emit("aten::Float.Tensor : (Tensor) -> (float)", has_folder=True)
+    emit("aten::_native_multi_head_attention : (Tensor, Tensor, Tensor, int, int, Tensor, Tensor, Tensor, Tensor, Tensor?, bool, bool) -> (Tensor, Tensor)")
     emit_with_mutating_variants("aten::dropout : (Tensor, float, bool) -> (Tensor)")
     emit("aten::native_dropout : (Tensor, float, bool?) -> (Tensor, Tensor)")
     emit("aten::t : (Tensor) -> (Tensor)")

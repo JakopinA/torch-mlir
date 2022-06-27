@@ -5906,6 +5906,41 @@ def Torch_AtenFloatTensorOp : Torch_Op<"aten.Float.Tensor", [
   let hasFolder = 1;
 }
 
+def Torch_Aten_NativeMultiHeadAttentionOp : Torch_Op<"aten._native_multi_head_attention", [
+    AllowsTypeRefinement,
+    HasValueSemantics,
+    ReadOnly
+  ]> {
+  let summary = "Generated op for `aten::_native_multi_head_attention : (Tensor, Tensor, Tensor, int, int, Tensor, Tensor, Tensor, Tensor, Tensor?, bool, bool) -> (Tensor, Tensor)`";
+  let arguments = (ins
+    AnyTorchTensorType:$query,
+    AnyTorchTensorType:$key,
+    AnyTorchTensorType:$value,
+    Torch_IntType:$embed_dim,
+    Torch_IntType:$num_head,
+    AnyTorchTensorType:$qkv_weight,
+    AnyTorchTensorType:$qkv_bias,
+    AnyTorchTensorType:$proj_weight,
+    AnyTorchTensorType:$proj_bias,
+    AnyTorchOptionalTensorType:$mask,
+    Torch_BoolType:$need_weights,
+    Torch_BoolType:$average_attn_weights
+  );
+  let results = (outs
+    AnyTorchTensorType:$result0,
+    AnyTorchTensorType:$result1
+  );
+  let hasCustomAssemblyFormat = 1;
+  let extraClassDefinition = [{
+    ParseResult Aten_NativeMultiHeadAttentionOp::parse(OpAsmParser &parser, OperationState &result) {
+      return parseDefaultTorchOp(parser, result, 12, 2);
+    }
+    void Aten_NativeMultiHeadAttentionOp::print(OpAsmPrinter &printer) {
+      printDefaultTorchOp(printer, *this, 12, 2);
+    }
+  }];
+}
+
 def Torch_AtenDropoutOp : Torch_Op<"aten.dropout", [
     AllowsTypeRefinement,
     HasValueSemantics,
