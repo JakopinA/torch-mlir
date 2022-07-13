@@ -839,7 +839,7 @@ public:
     if (!matchPattern(dimValue, m_TorchConstantInt(&dim)))
       return op.emitError("unimplemented: dim is not constant");
 
-    // Collect all the tensors to be concatenated.
+    // Collect all the tensors to be concatenated. 
     auto tensorList = op.tensors();
     SmallVector<Value> tensorsTorchType;
     if (!getListConstructElements(tensorList, tensorsTorchType))
